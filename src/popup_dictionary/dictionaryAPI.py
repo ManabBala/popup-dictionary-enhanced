@@ -1,5 +1,7 @@
 import requests
 
+onlyFirstTwoDefinition = True
+
 
 def wordMeaning(word):
     meaningContent = ""
@@ -12,7 +14,10 @@ def wordMeaning(word):
             if meaningContent:
                 meaningContent += "<hr>"
             meaningContent += "\n" + meaning['partOfSpeech'].capitalize() + ":"
+            defCount = 0
             for definition in meaning['definitions']:
+                if onlyFirstTwoDefinition and defCount >= 2:
+                    break
                 # print('definition:', definition['definition'])
                 meaningContent += "\n<br>=>" + definition['definition']
                 # if definition['synonyms']:
@@ -20,6 +25,7 @@ def wordMeaning(word):
                 #     meaningContent += "\n" + " ".join(definition['synonyms'])
                 # if definition['antonyms']:
                 #     print('Opposite: ', "    ".join(definition['antonyms']))
+                defCount += 1
                 print()
             print()
         print(meaningContent)
