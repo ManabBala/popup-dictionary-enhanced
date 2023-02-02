@@ -46,6 +46,9 @@ if TYPE_CHECKING:
     from anki.collection import Collection
     from anki.notes import Note, NoteId
 
+# dictionary api for definition of word
+from .dictionaryAPI import wordMeaning
+
 PYCMD_IDENTIFIER: str = "popupDictionary"
 
 # UI messages
@@ -108,6 +111,10 @@ def get_content_for(term: str, ignore_nid: str) -> str:
     dict_entry = None
     note_content = None
     content = []
+
+    wordMeaningContent = wordMeaning(term)
+    if wordMeaningContent:
+        content.append(f'<div class="pdict-res" style="text-align:left">{wordMeaningContent}</div>')
 
     if conf["dictionaryEnabled"]:
         dict_entry = search_definition_for(term)
